@@ -1,0 +1,17 @@
+
+tolerations: &tolerations
+- key: "workload_type"
+  operator: "Equal"
+  value: "system"
+  effect: "NoSchedule"
+
+nodeSelector: &node_selector
+  workload_type: system
+
+webhook:
+  tolerations: *tolerations
+  nodeSelector: *node_selector
+
+cainjector:
+  tolerations: *tolerations
+  nodeSelector: *node_selector

@@ -1,0 +1,5 @@
+acme:
+  server: https://acme-staging-v02.api.letsencrypt.org/directory
+  # Name of the secret used to store the private key
+  privateKeyName: issuer-account-key
+

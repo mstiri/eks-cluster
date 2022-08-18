@@ -1,0 +1,19 @@
+
+tolerations: 
+- key: "workload_type"
+  operator: "Equal"
+  value: "system"
+  effect: "NoSchedule"
+
+nodeSelector: 
+  workload_type: system
+
+sources:
+  - ingress
+
+crd:
+  create: true
+
+logFormat: json
+policy: sync 
+
