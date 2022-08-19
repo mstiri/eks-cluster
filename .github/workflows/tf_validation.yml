@@ -1,6 +1,6 @@
 # Basic workflow
 
-name: base
+name: tf_validation
 
 # Controls when the workflow will run
 on:
