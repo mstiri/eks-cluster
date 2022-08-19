@@ -1,6 +1,6 @@
 
 # EKS Cluster
-[![Terraform validation](https://github.com/mstiri/eks-cluster/actions/workflows/tf_validation.yml)](https://github.com/mstiri/eks-cluster/actions/workflows/tf_validation.yml)
+[![Terraform validation](https://github.com/mstiri/eks-cluster/actions/workflows/tf_validation.yml/badge.svg)](https://github.com/mstiri/eks-cluster/actions/workflows/tf_validation.yml)
 
 ![EKS Cluster Diagram](doc/img/EKS-Cluster-diagram.png "EKS Cluster Diagram")
 
