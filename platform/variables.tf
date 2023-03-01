@@ -8,7 +8,7 @@ variable "region" {}
 
 variable "cert-manager" {
   default = {
-    chart_version   = "1.6.1"
+    chart_version   = "1.11.0"
     namespace       = "system"
     service_account = "cert-manager"
   }
@@ -16,7 +16,7 @@ variable "cert-manager" {
 
 variable "external-dns" {
   default = {
-    chart_version   = "6.7.5"
+    chart_version   = "6.14.1"
     namespace       = "system"
     service_account = "external-dns"
   }
@@ -25,7 +25,8 @@ variable "external-dns" {
 variable "ingress" {
   default = {
     namespace     = "system"
-    chart_version = "4.2.1"
+    chart_version = "4.5.2"
+    timeout       = "600"
   }
 }
 
