@@ -8,6 +8,7 @@ resource "helm_release" "ingress_controller" {
   namespace             = var.ingress.namespace
   create_namespace      = true
   values                = [file("${path.module}/ingress-values.yml")]
+  timeout               = var.ingress.timeout
 
   # set {
   #   name  = "controller.extraArgs.default-ssl-certificate"

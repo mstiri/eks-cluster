@@ -37,7 +37,7 @@ provider "helm" {
   }
 }
 
-#### Platform module 
+#### Platform module
 module "platform" {
   source                = "./platform"
   allowed_clients_cidrs = var.allowed_clients_cidrs

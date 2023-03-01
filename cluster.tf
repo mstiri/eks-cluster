@@ -1,9 +1,9 @@
 
 
-### EKS Cluster creation
+### EKS Cluster creation
 module "eks" {
   source                               = "terraform-aws-modules/eks/aws"
-  version                              = "18.27.1"
+  version                              = "~> 18.0"
   cluster_version                      = var.cluster_version
   cluster_name                         = local.cluster_name
   vpc_id                               = module.vpc.vpc_id
@@ -16,7 +16,7 @@ module "eks" {
   eks_managed_node_group_defaults = {
     ami_type       = "AL2_x86_64"
     disk_size      = 10
-    instance_types = ["t3a.small"]
+    instance_types = ["t3a.small", "t3.small"]
     capacity_type  = "SPOT"
     update_config = {
       max_unavailable_percentage = 50
