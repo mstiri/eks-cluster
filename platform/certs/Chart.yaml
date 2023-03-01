@@ -1,6 +1,6 @@
 apiVersion: v2
 name: certs
-description: A Helm chart for Kubernetes to create necessary certificate and ClusterIssuer
+description: A Helm chart for Kubernetes to create a ClusterIssuer for cert-manager
 
 # A chart can be either an 'application' or a 'library' chart.
 #
