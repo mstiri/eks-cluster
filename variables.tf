@@ -19,7 +19,7 @@ variable "acme_email" {
 variable "kube-cert-acm" {
   default = {
     enabled         = true
-    chart_version   = "0.0.1"
+    chart_version   = "0.1.0"
     namespace       = "system"
     service_account = "kube-cert-acm"
   }
