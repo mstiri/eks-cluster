@@ -48,7 +48,7 @@ resource "aws_iam_policy" "kube_cert_acm" {
 resource "helm_release" "kube_cert_acm" {
   count                 = var.kube-cert-acm.enabled ? 1 : 0
   name                  = "kube-cert-acm"
-  repository            = dirname("${path.module}/../../kube-cert-acm/kube-cert-acm")
+  repository            = dirname("${path.module}/../../kube-cert-acm/chart/kube-cert-acm")
   chart                 = "kube-cert-acm"
   version               = var.kube-cert-acm.chart_version
   render_subchart_notes = false
