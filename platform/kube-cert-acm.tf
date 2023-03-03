@@ -32,8 +32,7 @@ data "aws_iam_policy_document" "kube_cert_acm" {
         "acm:UpdateCertificateOptions",
         "acm:AddTagsToCertificate",
         "acm:ImportCertificate",
-        "acm:ListTagsForCertificate",
-        "acm:ListCertificates"
+        "acm:ListTagsForCertificate"
     ]
     resources = ["arn:aws:acm:${var.region}:${var.account_id}:certificate/*"]
   }
