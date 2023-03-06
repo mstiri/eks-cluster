@@ -6,11 +6,23 @@ variable "eks" {}
 
 variable "region" {}
 
+variable "account_id" {}
+
 variable "cert-manager" {
   default = {
     chart_version   = "1.11.0"
     namespace       = "system"
     service_account = "cert-manager"
+  }
+}
+
+variable "kube-cert-acm" {
+  default = {
+    enabled         = true
+    chart_version   = "0.0.3"
+    namespace       = "system"
+    service_account = "kube-cert-acm"
+    helm_repository = "https://mstiri.github.io/kube-cert-acm"
   }
 }
 

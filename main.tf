@@ -45,6 +45,7 @@ module "platform" {
   eks                   = module.eks
   region                = var.region
   acme_email            = var.acme_email
+  account_id            = local.account_id
 }
 
 #### Apps module
