@@ -47,7 +47,7 @@ resource "aws_iam_policy" "kube_cert_acm" {
 resource "helm_release" "kube_cert_acm" {
   count                 = var.kube-cert-acm.enabled ? 1 : 0
   name                  = "kube-cert-acm"
-  repository            = dirname("${path.module}/../../kube-cert-acm/chart/kube-cert-acm")
+  repository            = var.kube-cert-acm.helm_repository
   chart                 = "kube-cert-acm"
   version               = var.kube-cert-acm.chart_version
   render_subchart_notes = false
@@ -58,5 +58,10 @@ resource "helm_release" "kube_cert_acm" {
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.iam_assumable_role_for_kube_cert_acm[count.index].iam_role_arn
+  }
+
+  set {
+    name = "aws.region"
+    value = var.region
   }
 }
