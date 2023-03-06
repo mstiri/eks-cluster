@@ -18,10 +18,11 @@ variable "cert-manager" {
 
 variable "kube-cert-acm" {
   default = {
-    enabled         = false
-    chart_version   = "0.0.1"
+    enabled         = true
+    chart_version   = "0.0.3"
     namespace       = "system"
     service_account = "kube-cert-acm"
+    helm_repository = "https://mstiri.github.io/kube-cert-acm"
   }
 }
 

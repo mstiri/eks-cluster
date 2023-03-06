@@ -46,7 +46,6 @@ module "platform" {
   region                = var.region
   acme_email            = var.acme_email
   account_id            = local.account_id
-  kube-cert-acm         = var.kube-cert-acm
 }
 
 #### Apps module
