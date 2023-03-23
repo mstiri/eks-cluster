@@ -19,3 +19,5 @@ It also installs some addons for a functional kubernetes cluster:
 - ExternalDNS addon
 
 To test the cluster, an app (podinfo) is deployed to make sure the cluster and the different addons (Ingress Controller, CertManager and ExternalDNS) are working as expected.
+
+Optionally, [kube-cert-acm](https://github.com/mstiri/kube-cert-acm) can be enabled and installed on the cluster.
