@@ -2,16 +2,22 @@
 
 ### EKS Cluster creation
 module "eks" {
-  source                               = "terraform-aws-modules/eks/aws"
-  version                              = "~> 19.0"
-  cluster_version                      = var.cluster_version
-  cluster_name                         = local.cluster_name
-  vpc_id                               = module.vpc.vpc_id
-  subnet_ids                           = module.vpc.private_subnets
-  cluster_endpoint_public_access       = true
-  cluster_endpoint_private_access      = true
-  cluster_endpoint_public_access_cidrs = var.kubeapi_allowed_cidrs
-  enable_irsa                          = true
+  source                                        = "terraform-aws-modules/eks/aws"
+  version                                       = "~> 19.0"
+  cluster_version                               = var.cluster_version
+  cluster_name                                  = local.cluster_name
+  vpc_id                                        = module.vpc.vpc_id
+  subnet_ids                                    = module.vpc.private_subnets
+  cluster_endpoint_public_access                = true
+  cluster_endpoint_private_access               = true
+  cluster_endpoint_public_access_cidrs          = var.kubeapi_allowed_cidrs
+  enable_irsa                                   = true
+  node_security_group_enable_recommended_rules  = true
+
+  create_kms_key            = true
+  cluster_encryption_config = {
+    resources = ["secrets"]
+  }
 
   eks_managed_node_group_defaults = {
     ami_type       = "AL2_x86_64"
@@ -37,31 +43,7 @@ module "eks" {
 
   # Extend node-to-node security group rules
   node_security_group_additional_rules = {
-    ingress_self_all = {
-      description = "Node to node all ports/protocols"
-      protocol    = "-1"
-      from_port   = 0
-      to_port     = 0
-      type        = "ingress"
-      self        = true
-    }
-    ingress_cluster_all = {
-      description                   = "Cluster to node all ports/protocols"
-      protocol                      = "-1"
-      from_port                     = 0
-      to_port                       = 0
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-    egress_all = {
-      description      = "Node all egress"
-      protocol         = "-1"
-      from_port        = 0
-      to_port          = 0
-      type             = "egress"
-      cidr_blocks      = ["0.0.0.0/0"]
-      ipv6_cidr_blocks = ["::/0"]
-    }
+
   }
 
   eks_managed_node_groups = {
