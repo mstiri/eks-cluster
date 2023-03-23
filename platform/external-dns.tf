@@ -1,7 +1,7 @@
 
 module "iam_assumable_role_for_external_dns" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "4.11.0"
+  version                       = "5.14.3"
   create_role                   = true
   number_of_role_policy_arns    = 1
   role_name                     = "external-dns-role-${var.eks.cluster_name}"
