@@ -4,13 +4,13 @@ module "iam_assumable_role_for_external_dns" {
   version                       = "4.11.0"
   create_role                   = true
   number_of_role_policy_arns    = 1
-  role_name                     = "external-dns-role-${var.eks.cluster_id}"
+  role_name                     = "external-dns-role-${var.eks.cluster_name}"
   provider_url                  = replace(var.eks.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.external_dns.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.external-dns.namespace}:${var.external-dns.service_account}"]
 }
 
-# ExternalDNS policy 
+# ExternalDNS policy
 data "aws_iam_policy_document" "external_dns" {
   statement {
     actions   = ["sts:AssumeRole"]
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "external_dns" {
 }
 
 resource "aws_iam_policy" "external_dns" {
-  name   = "external-dns-policy-${var.eks.cluster_id}"
+  name   = "external-dns-policy-${var.eks.cluster_name}"
   policy = data.aws_iam_policy_document.external_dns.json
 }
 

@@ -4,7 +4,7 @@ module "iam_assumable_role_for_cert_manager" {
   version                       = "4.11.0"
   create_role                   = true
   number_of_role_policy_arns    = 1
-  role_name                     = "cert-manager-role-${var.eks.cluster_id}"
+  role_name                     = "cert-manager-role-${var.eks.cluster_name}"
   provider_url                  = replace(var.eks.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.cert_manager.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.cert-manager.namespace}:${var.cert-manager.service_account}"]
@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "cert_manager" {
   }
 }
 resource "aws_iam_policy" "cert_manager" {
-  name   = "cert-manager-policy-${var.eks.cluster_id}"
+  name   = "cert-manager-policy-${var.eks.cluster_name}"
   policy = data.aws_iam_policy_document.cert_manager.json
 }
 

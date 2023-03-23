@@ -13,13 +13,13 @@ locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
-### Kubernetes provider configuration
+### Kubernetes provider configuration
 data "aws_eks_cluster" "eks" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
 }
 
 data "aws_eks_cluster_auth" "eks" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
 }
 
 provider "kubernetes" {
