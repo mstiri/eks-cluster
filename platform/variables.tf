@@ -43,6 +43,7 @@ variable "external-dns" {
 
 variable "ingress" {
   default = {
+    enabled       = true
     namespace     = "system"
     chart_version = "4.5.2"
     timeout       = "600"
