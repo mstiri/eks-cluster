@@ -1,5 +1,6 @@
 
 resource "helm_release" "certs" {
+  count                 = var.cert-manager.enabled && var.cert-manager.create_cluster_issuer ? 1 : 0
   name                  = "certs"
   repository            = dirname("${path.module}/certs")
   chart                 = "certs"
@@ -26,11 +27,9 @@ resource "helm_release" "certs" {
   }
   set {
     name  = "aws.iamRole"
-    value = module.iam_assumable_role_for_cert_manager.iam_role_arn
+    value = module.iam_assumable_role_for_cert_manager[count.index].iam_role_arn
   }
   depends_on = [
     helm_release.cert_manager
   ]
 }
-
-

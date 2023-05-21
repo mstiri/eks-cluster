@@ -10,9 +10,15 @@ variable "account_id" {}
 
 variable "cert-manager" {
   default = {
-    chart_version   = "1.11.0"
-    namespace       = "system"
-    service_account = "cert-manager"
+    enabled               = false
+    create_cluster_issuer = false
+    chart_version         = "1.11.0"
+    namespace             = "system"
+    service_account       = "cert-manager"
+  }
+  validation {
+    condition = var.cert-manager.enabled || (!var.cert-manager.enabled && !var.cert-manager.create_cluster_issuer)
+    error_message = "To create the cluster issuer, the cert-manager must be enabled"
   }
 }
 

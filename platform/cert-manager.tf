@@ -1,17 +1,19 @@
 
 module "iam_assumable_role_for_cert_manager" {
+  count                         = var.cert-manager.enabled ? 1 : 0
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "5.14.3"
   create_role                   = true
   number_of_role_policy_arns    = 1
   role_name                     = "cert-manager-role-${var.eks.cluster_name}"
   provider_url                  = replace(var.eks.cluster_oidc_issuer_url, "https://", "")
-  role_policy_arns              = [aws_iam_policy.cert_manager.arn]
+  role_policy_arns              = [aws_iam_policy.cert_manager[count.index].arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.cert-manager.namespace}:${var.cert-manager.service_account}"]
 }
 
 # Cert-manager policy
 data "aws_iam_policy_document" "cert_manager" {
+  count = var.cert-manager.enabled ? 1 : 0
   statement {
     actions   = ["sts:AssumeRole"]
     resources = ["*"]
@@ -40,12 +42,14 @@ data "aws_iam_policy_document" "cert_manager" {
   }
 }
 resource "aws_iam_policy" "cert_manager" {
+  count  = var.cert-manager.enabled ? 1 : 0
   name   = "cert-manager-policy-${var.eks.cluster_name}"
-  policy = data.aws_iam_policy_document.cert_manager.json
+  policy = data.aws_iam_policy_document.cert_manager[count.index].json
 }
 
 # Cert-manager Helm release
 resource "helm_release" "cert_manager" {
+  count                 = var.cert-manager.enabled ? 1 : 0
   name                  = "cert-manager"
   repository            = "https://charts.jetstack.io"
   chart                 = "cert-manager"
@@ -60,6 +64,6 @@ resource "helm_release" "cert_manager" {
   }
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.iam_assumable_role_for_cert_manager.iam_role_arn
+    value = module.iam_assumable_role_for_cert_manager[count.index].iam_role_arn
   }
 }
