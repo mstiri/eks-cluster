@@ -18,7 +18,7 @@ variable "cert-manager" {
 
 variable "kube-cert-acm" {
   default = {
-    enabled         = true
+    enabled         = false
     chart_version   = "0.0.3"
     namespace       = "system"
     service_account = "kube-cert-acm"

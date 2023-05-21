@@ -4,11 +4,10 @@ redis:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: 
+  annotations:
     cert-manager.io/cluster-issuer: letsencrypt
 
   hosts:
     - paths:
         - path: /
           pathType: Prefix
- 
