@@ -34,6 +34,7 @@ variable "kube-cert-acm" {
 
 variable "external-dns" {
   default = {
+    enabled         = true
     chart_version   = "6.14.1"
     namespace       = "system"
     service_account = "external-dns"
