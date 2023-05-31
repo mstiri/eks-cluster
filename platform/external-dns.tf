@@ -1,17 +1,19 @@
 
 module "iam_assumable_role_for_external_dns" {
+  count                         = var.external-dns.enabled ? 1 : 0
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "5.14.3"
   create_role                   = true
   number_of_role_policy_arns    = 1
   role_name                     = "external-dns-role-${var.eks.cluster_name}"
   provider_url                  = replace(var.eks.cluster_oidc_issuer_url, "https://", "")
-  role_policy_arns              = [aws_iam_policy.external_dns.arn]
+  role_policy_arns              = [aws_iam_policy.external_dns[count.index].arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.external-dns.namespace}:${var.external-dns.service_account}"]
 }
 
 # ExternalDNS policy
 data "aws_iam_policy_document" "external_dns" {
+  count = var.external-dns.enabled ? 1 : 0
   statement {
     actions   = ["sts:AssumeRole"]
     resources = ["*"]
@@ -36,12 +38,14 @@ data "aws_iam_policy_document" "external_dns" {
 }
 
 resource "aws_iam_policy" "external_dns" {
+  count  = var.external-dns.enabled ? 1 : 0
   name   = "external-dns-policy-${var.eks.cluster_name}"
-  policy = data.aws_iam_policy_document.external_dns.json
+  policy = data.aws_iam_policy_document.external_dns[count.index].json
 }
 
 # ExternalDNS Helm release
 resource "helm_release" "external_dns" {
+  count                 = var.external-dns.enabled ? 1 : 0
   name                  = "external-dns"
   repository            = "https://charts.bitnami.com/bitnami"
   chart                 = "external-dns"
@@ -64,7 +68,7 @@ resource "helm_release" "external_dns" {
   }
   set {
     name  = "aws.assumeRoleArn"
-    value = module.iam_assumable_role_for_external_dns.iam_role_arn
+    value = module.iam_assumable_role_for_external_dns[count.index].iam_role_arn
   }
   set {
     name  = "aws.zoneType"
@@ -80,7 +84,7 @@ resource "helm_release" "external_dns" {
   }
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.iam_assumable_role_for_external_dns.iam_role_arn
+    value = module.iam_assumable_role_for_external_dns[count.index].iam_role_arn
   }
 }
 
