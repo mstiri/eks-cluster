@@ -50,9 +50,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     default = {
-      desired_capacity = 2
-      max_capacity     = 3
-      min_capacity     = 1
+      desired_size     = 2
+      max_size         = 3
+      min_size         = 1
 
       labels = {
         workload_type = "default"
@@ -60,9 +60,9 @@ module "eks" {
 
     }
     system = {
-      desired_capacity = 2
-      max_capacity     = 3
-      min_capacity     = 1
+      desired_size     = 2
+      max_size         = 3
+      min_size         = 1
 
       labels = {
         workload_type = "system"
