@@ -1,6 +1,7 @@
 
 ### Podinfo Helm release
 resource "helm_release" "podinfo" {
+  count            = var.podinfo.enabled ? 1 : 0
   name             = "podinfo"
   repository       = "https://stefanprodan.github.io/podinfo"
   chart            = "podinfo"

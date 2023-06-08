@@ -10,8 +10,8 @@ variable "account_id" {}
 
 variable "cert-manager" {
   default = {
-    enabled               = false
-    create_cluster_issuer = false
+    enabled               = true
+    create_cluster_issuer = true
     chart_version         = "1.11.0"
     namespace             = "system"
     service_account       = "cert-manager"
