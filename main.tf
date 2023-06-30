@@ -27,6 +27,7 @@ provider "helm" {
 
 #### Platform module
 module "platform" {
+  count                 = var.platform.enabled ? 1 : 0
   source                = "./platform"
   allowed_clients_cidrs = var.allowed_clients_cidrs
   public_dns_zone       = var.public_dns_zone
@@ -38,6 +39,7 @@ module "platform" {
 
 #### Apps module
 module "apps" {
+  count           = var.apps.enabled ? 1 : 0
   source          = "./apps"
   public_dns_zone = var.public_dns_zone
   depends_on = [

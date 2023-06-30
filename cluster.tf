@@ -33,14 +33,6 @@ module "eks" {
 
   # Extend cluster security group rules
   cluster_security_group_additional_rules = {
-    egress_ephemeral_ports = {
-      description                = "Allow outgoing ephemeral port 1025-65535"
-      protocol                   = "tcp"
-      from_port                  = 1025
-      to_port                    = 65535
-      type                       = "egress"
-      source_node_security_group = true
-    }
   }
 
   # Extend node-to-node security group rules
@@ -50,9 +42,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     default = {
-      desired_size     = 2
-      max_size         = 3
-      min_size         = 1
+      desired_size = 2
+      max_size     = 3
+      min_size     = 1
 
       labels = {
         workload_type = "default"
@@ -60,9 +52,9 @@ module "eks" {
 
     }
     system = {
-      desired_size     = 2
-      max_size         = 3
-      min_size         = 1
+      desired_size = 2
+      max_size     = 3
+      min_size     = 1
 
       labels = {
         workload_type = "system"
