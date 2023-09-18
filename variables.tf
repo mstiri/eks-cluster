@@ -4,7 +4,10 @@ variable "environment" {}
 
 variable "region" {}
 
-variable "cluster_version" {}
+variable "cluster_version" {
+  description = "Kubernetes cluster version"
+  default     = "1.27"
+}
 
 variable "kubeapi_allowed_cidrs" {}
 
@@ -19,13 +22,13 @@ variable "acme_email" {
 variable "platform" {
   description = "Flag to enable / disable the install of platform components"
   default = {
-    enabled = true
+    enabled = false
   }
 }
 
 variable "apps" {
   description = "Flag to enable / disable the install of app components"
   default = {
-    enabled = true
+    enabled = false
   }
 }
